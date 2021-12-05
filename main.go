@@ -5,12 +5,14 @@ import (
 	"github.com/TReyburn/aoc-21/day1"
 	"github.com/TReyburn/aoc-21/day2"
 	"github.com/TReyburn/aoc-21/day3"
+	"github.com/TReyburn/aoc-21/day4"
 )
 
 var (
 	dayOne   = false
 	dayTwo   = false
-	dayThree = true
+	dayThree = false
+	dayFour  = true
 )
 
 func main() {
@@ -26,7 +28,14 @@ func main() {
 	}
 
 	if dayThree {
-		fmt.Println("day 3: Part 1: ", day3.CalculatePower(day3.RunPowerDiagnostic(day3.DayThreeData)))
-		fmt.Println("day 3: Part 2: ", day3.CalculatePower(day3.FindLifeSupportRatings(day3.DayThreeData)))
+		fmt.Println("Day 3: Part 1: ", day3.CalculatePower(day3.RunPowerDiagnostic(day3.DayThreeData)))
+		fmt.Println("Day 3: Part 2: ", day3.CalculatePower(day3.FindLifeSupportRatings(day3.DayThreeData)))
+	}
+
+	if dayFour {
+		bingo := day4.LoadBingo(day4.DayFourData)
+		fmt.Println("Day 4: Part 1: ", day4.CalculateScore(bingo.RunGame()))
+		newBingo := day4.LoadBingo(day4.DayFourData)
+		fmt.Println("Day 4: Part 2: ", day4.CalculateScore(newBingo.RunGameUntilLastBoardWins()))
 	}
 }
