@@ -34,8 +34,9 @@ func NewPoint(p string) (*Point, error) {
 }
 
 type Grid struct {
-	points map[string]*Point
-	counts map[*Point]int
+	points           map[string]*Point
+	counts           map[*Point]int
+	includeDiagonals bool
 }
 
 func NewGrid() Grid {
@@ -43,6 +44,10 @@ func NewGrid() Grid {
 	c := make(map[*Point]int)
 
 	return Grid{points: p, counts: c}
+}
+
+func (g *Grid) EnableDiagonals() {
+	g.includeDiagonals = true
 }
 
 func (g *Grid) AddPoint(p *Point) {
@@ -103,6 +108,32 @@ func (g *Grid) AddLine(line string) error {
 			}
 		default:
 			return errors.New(fmt.Sprintf("line appears to be a point: %v, %v", startPoint, endPoint))
+		}
+	} else {
+		if g.includeDiagonals {
+			var xDir, yDir int
+			g.AddPoint(startPoint)
+			g.AddPoint(endPoint)
+			diff := max(x1, x2) - min(x1, x2)
+			if x2 > x1 {
+				xDir = 1
+			} else {
+				xDir = -1
+			}
+			if y2 > y1 {
+				yDir = 1
+			} else {
+				yDir = -1
+			}
+			for i := 1; i < diff; i++ {
+				xPos := x1 + (i * xDir)
+				yPos := y1 + (i * yDir)
+				p, err := NewPoint(fmt.Sprintf("%v,%v", xPos, yPos))
+				if err != nil {
+					return err
+				}
+				g.AddPoint(p)
+			}
 		}
 	}
 	return nil

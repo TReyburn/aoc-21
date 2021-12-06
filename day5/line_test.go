@@ -68,13 +68,81 @@ func TestGrid_AddLine_HorizontalNeg(t *testing.T) {
 	}
 }
 
-func TestGrid_AddLine_Diagonal(t *testing.T) {
-	// This test is to ensure that diagonals don't get added
+func TestGrid_AddLine_Diagonal_NonEnabled(t *testing.T) {
+	// This test is to ensure that diagonals don't get added by default
 	line := `9,7 -> 7,9`
 	wantPointsNum := 0
 	wantPointCount := 0
 
 	grid := NewGrid()
+
+	err := grid.AddLine(line)
+	assert.NoError(t, err)
+
+	assert.Equal(t, wantPointsNum, len(grid.points))
+	for _, v := range grid.counts {
+		assert.Equal(t, wantPointCount, v)
+	}
+}
+
+func TestGrid_AddLine_Diagonal_Enabled(t *testing.T) {
+	line := `1,1 -> 3,3`
+	wantPointsNum := 3
+	wantPointCount := 1
+
+	grid := NewGrid()
+	grid.EnableDiagonals()
+
+	err := grid.AddLine(line)
+	assert.NoError(t, err)
+
+	assert.Equal(t, wantPointsNum, len(grid.points))
+	for _, v := range grid.counts {
+		assert.Equal(t, wantPointCount, v)
+	}
+}
+
+func TestGrid_AddLine_Diagonal_Enabled2(t *testing.T) {
+	line := `9,7 -> 7,9`
+	wantPointsNum := 3
+	wantPointCount := 1
+
+	grid := NewGrid()
+	grid.EnableDiagonals()
+
+	err := grid.AddLine(line)
+	assert.NoError(t, err)
+
+	assert.Equal(t, wantPointsNum, len(grid.points))
+	for _, v := range grid.counts {
+		assert.Equal(t, wantPointCount, v)
+	}
+}
+
+func TestGrid_AddLine_Diagonal_Enabled3(t *testing.T) {
+	line := `9,7 -> 7,5`
+	wantPointsNum := 3
+	wantPointCount := 1
+
+	grid := NewGrid()
+	grid.EnableDiagonals()
+
+	err := grid.AddLine(line)
+	assert.NoError(t, err)
+
+	assert.Equal(t, wantPointsNum, len(grid.points))
+	for _, v := range grid.counts {
+		assert.Equal(t, wantPointCount, v)
+	}
+}
+
+func TestGrid_AddLine_Diagonal_Enabled4(t *testing.T) {
+	line := `7,9 -> 9,7`
+	wantPointsNum := 3
+	wantPointCount := 1
+
+	grid := NewGrid()
+	grid.EnableDiagonals()
 
 	err := grid.AddLine(line)
 	assert.NoError(t, err)
@@ -133,8 +201,6 @@ func TestGrid_CountOverlaps_EdgeCase(t *testing.T) {
 
 func TestGrid_CountOverlaps_EdgeCase2(t *testing.T) {
 	wantOverlapCount := 1
-	//	lines := `467,680 -> 767,680
-	//580,460 -> 580,749`
 	lines := `579,680 -> 581,680
 580,679 -> 580,681`
 
@@ -142,6 +208,33 @@ func TestGrid_CountOverlaps_EdgeCase2(t *testing.T) {
 
 	err := grid.BulkAddLines(lines)
 
+	assert.NoError(t, err)
+
+	gotOverlapCount := grid.CountOverlaps()
+	assert.Equal(t, wantOverlapCount, gotOverlapCount)
+}
+
+func TestGrid_CountOverlaps_Diagonal(t *testing.T) {
+	wantOverlapCount := 12
+
+	grid := NewGrid()
+	grid.EnableDiagonals()
+	err := grid.BulkAddLines(testData)
+	assert.NoError(t, err)
+
+	gotOverlapCount := grid.CountOverlaps()
+	assert.Equal(t, wantOverlapCount, gotOverlapCount)
+}
+
+func TestGrid_CountOverlaps_Diagonal2(t *testing.T) {
+	wantOverlapCount := 1
+	lines := `0,9 -> 5,9
+8,0 -> 0,8
+9,4 -> 3,4`
+
+	grid := NewGrid()
+	grid.EnableDiagonals()
+	err := grid.BulkAddLines(lines)
 	assert.NoError(t, err)
 
 	gotOverlapCount := grid.CountOverlaps()
