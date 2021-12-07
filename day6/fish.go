@@ -37,18 +37,6 @@ func (s *School) Seed(fish ...int) {
 }
 
 func (s *School) Day() {
-	//tba := make([]int, 0)
-	//
-	//for idx, fish := range s.school {
-	//	if fish == 0 {
-	//		tba = append(tba, s.initTimer)
-	//		s.school[idx] = s.resetTimer
-	//	} else {
-	//		s.school[idx]--
-	//	}
-	//}
-	//
-	//s.Seed(tba...)
 	var newFish int
 	newSchool := make(map[int]*Fish)
 	for k, v := range s.school {
