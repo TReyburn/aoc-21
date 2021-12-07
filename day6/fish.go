@@ -1,23 +1,15 @@
 package day6
 
-type Fish struct {
-	count int
-}
-
-func NewFish(v int) *Fish {
-	return &Fish{count: v}
-}
-
 type School struct {
 	initTimer  int
 	resetTimer int
-	school     map[int]*Fish
+	school     map[int]int
 }
 
 func NewSchool(input []int) *School {
-	s := make(map[int]*Fish)
+	s := make(map[int]int)
 	for i := 0; i < 9; i++ {
-		s[i] = NewFish(0)
+		s[i] = 0
 	}
 
 	school := &School{
@@ -32,30 +24,30 @@ func NewSchool(input []int) *School {
 
 func (s *School) Seed(fish ...int) {
 	for _, n := range fish {
-		s.school[n].count++
+		s.school[n]++
 	}
 }
 
 func (s *School) Day() {
 	var newFish int
-	newSchool := make(map[int]*Fish)
+	newSchool := make(map[int]int)
 	for k, v := range s.school {
 		k--
 		if k < 0 {
-			newFish = v.count
+			newFish = v
 		} else {
 			newSchool[k] = v
 		}
 	}
-	newSchool[6].count += newFish
-	newSchool[8] = NewFish(newFish)
+	newSchool[6] += newFish
+	newSchool[8] = newFish
 	s.school = newSchool
 }
 
 func (s *School) CountFish() int {
 	var fishCount int
 	for _, v := range s.school {
-		fishCount += v.count
+		fishCount += v
 	}
 	return fishCount
 }

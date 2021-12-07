@@ -15,7 +15,7 @@ func TestNewSchool(t *testing.T) {
 	assert.Equal(t, wantInitTimer, s.initTimer)
 	assert.Equal(t, wantResetTimer, s.resetTimer)
 	for _, v := range s.school {
-		assert.Equal(t, wantCount, v.count)
+		assert.Equal(t, wantCount, v)
 	}
 }
 
@@ -30,22 +30,22 @@ func TestSchool_Seed(t *testing.T) {
 
 	s := NewSchool(input)
 	for k, v := range wantInitCounts {
-		assert.Equal(t, v, s.school[k].count)
+		assert.Equal(t, v, s.school[k])
 	}
 
 	s.Seed(seed1...)
 	for k, v := range wantSeed1Counts {
-		assert.Equal(t, v, s.school[k].count)
+		assert.Equal(t, v, s.school[k])
 	}
 
 	s.Seed(seed2...)
 	for k, v := range wantSeed2Counts {
-		assert.Equal(t, v, s.school[k].count)
+		assert.Equal(t, v, s.school[k])
 	}
 
 	s.Seed(seed3...)
 	for k, v := range wantSeed2Counts {
-		assert.Equal(t, v, s.school[k].count)
+		assert.Equal(t, v, s.school[k])
 	}
 }
 
@@ -82,9 +82,9 @@ func TestSchool_Day(t *testing.T) {
 	for k, got := range s.school {
 		want, ok := d0Fish[k]
 		if !ok {
-			assert.Equal(t, 0, got.count)
+			assert.Equal(t, 0, got)
 		} else {
-			assert.Equal(t, want, got.count)
+			assert.Equal(t, want, got)
 		}
 	}
 
@@ -93,9 +93,9 @@ func TestSchool_Day(t *testing.T) {
 	for k, got := range s.school {
 		want, ok := d1Fish[k]
 		if !ok {
-			assert.Equal(t, 0, got.count)
+			assert.Equal(t, 0, got)
 		} else {
-			assert.Equal(t, want, got.count)
+			assert.Equal(t, want, got)
 		}
 	}
 
@@ -104,9 +104,9 @@ func TestSchool_Day(t *testing.T) {
 	for k, got := range s.school {
 		want, ok := d2Fish[k]
 		if !ok {
-			assert.Equal(t, 0, got.count)
+			assert.Equal(t, 0, got)
 		} else {
-			assert.Equal(t, want, got.count)
+			assert.Equal(t, want, got)
 		}
 	}
 
@@ -115,9 +115,9 @@ func TestSchool_Day(t *testing.T) {
 	for k, got := range s.school {
 		want, ok := d3Fish[k]
 		if !ok {
-			assert.Equal(t, 0, got.count)
+			assert.Equal(t, 0, got)
 		} else {
-			assert.Equal(t, want, got.count)
+			assert.Equal(t, want, got)
 		}
 	}
 
@@ -126,9 +126,9 @@ func TestSchool_Day(t *testing.T) {
 	for k, got := range s.school {
 		want, ok := d4Fish[k]
 		if !ok {
-			assert.Equal(t, 0, got.count)
+			assert.Equal(t, 0, got)
 		} else {
-			assert.Equal(t, want, got.count)
+			assert.Equal(t, want, got)
 		}
 	}
 }
@@ -145,9 +145,9 @@ func TestSchool_ProcessDays(t *testing.T) {
 	for k, got := range s.school {
 		want, ok := wantSchool[k]
 		if !ok {
-			assert.Equal(t, 0, got.count)
+			assert.Equal(t, 0, got)
 		} else {
-			assert.Equal(t, want, got.count)
+			assert.Equal(t, want, got)
 		}
 	}
 }
@@ -164,9 +164,9 @@ func TestSchool_ProcessDays2(t *testing.T) {
 	for k, got := range s.school {
 		want, ok := wantSchool[k]
 		if !ok {
-			assert.Equal(t, 0, got.count)
+			assert.Equal(t, 0, got)
 		} else {
-			assert.Equal(t, want, got.count)
+			assert.Equal(t, want, got)
 		}
 	}
 }
@@ -183,9 +183,9 @@ func TestSchool_ProcessDays3(t *testing.T) {
 	for k, got := range s.school {
 		want, ok := wantSchool[k]
 		if !ok {
-			assert.Equal(t, 0, got.count)
+			assert.Equal(t, 0, got)
 		} else {
-			assert.Equal(t, want, got.count)
+			assert.Equal(t, want, got)
 		}
 	}
 }
