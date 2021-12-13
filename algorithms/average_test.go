@@ -29,7 +29,6 @@ func TestMean(t *testing.T) {
 		{[]int{1, 2, 3}, 2},
 		{[]int{1, 2, 3, 4}, 3},
 		{[]int{0, 1, 1, 2, 2, 2, 2, 4, 7, 14, 16}, 5},
-		{},
 	}
 
 	for _, tc := range meanTests {
